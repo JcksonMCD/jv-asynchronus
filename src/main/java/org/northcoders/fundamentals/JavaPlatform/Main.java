@@ -26,17 +26,18 @@ public class Main {
         for (String d : dataList){
             integerList.add(BigInteger.valueOf(Integer.parseInt(d)));
         }
-        System.out.println(dataList);
 
         for (BigInteger element : integerList) {
             CompletableFuture<BigInteger> future = CompletableFuture.supplyAsync(() -> element);
 
             CompletableFuture<String> thenApply = future
-                    .thenApply(value -> value *2)
+                    .thenApply(Main::calculateFactorial)
                     .thenApplyAsync(value -> "Result after applying thenApply(): " + value);
 
             CompletableFuture<Void> thenAccept = future.thenAccept(value -> System.out.println("Result after applying thenAccept(): " + value));
         }
+
+
 
         //        //Task 1 & 2
 //        Thread.sleep(3000);
