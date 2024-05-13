@@ -14,12 +14,25 @@ public class TaskFive {
 
         System.out.println("Big integer list: " + integerList);
 
+        CompletableFuture.runAsync(() -> {
+            String story = "Mary had a little lamb, its fleece was white as snow.";
+            String[] words = story.split(" ");
+
+            for (String w : words){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println(w);
+            }
+                });
+
         CompletableFuture<List<BigInteger>> factorialFuture = CompletableFuture.supplyAsync(() ->
                 integerList.stream()
                         .map(TaskFive::calculateFactorial)
                         .toList()
         );
-
 
         factorialFuture.thenAccept(result -> {
             System.out.println("Factorials list: " + result);
