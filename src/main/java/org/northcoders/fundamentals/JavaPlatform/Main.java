@@ -13,27 +13,33 @@ public class Main {
 //        Thread.sleep(5000);
 //        CompletableFuture.runAsync(() -> System.out.print(" World!"));
 
-
         //Task 3
+        int randomForHello = (int)(Math.random()*10000);
+        int randomForWorld = (int)(Math.random()*10000);
+        try {
+            if (randomForHello + randomForWorld > 10000) {
+                throw new RuntimeException("Takes longer than 10 second");
+            }
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+        }
+
         CompletableFuture<String> firstWord = CompletableFuture.supplyAsync(() -> {
-            int r = (int) (Math.random()*1000);
             try{
-                Thread.sleep(r);
-                Thread.sleep(3000);
+                Thread.sleep(randomForHello);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            return "Hello Takes:" +r;
+            return "Hello Takes:" +randomForHello;
         });
 
         CompletableFuture<String> secondWord = CompletableFuture.supplyAsync(() -> {
-            int r = (int) (Math.random()*1000);
             try{
-                Thread.sleep(r);
+                Thread.sleep(randomForWorld);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            return "\nWorld! Takes:" + r;
+            return "\nWorld! Takes:" + randomForWorld;
         });
 
         CompletableFuture<String> combineWord = firstWord.thenCombine(secondWord, (first, second) -> first + second);
