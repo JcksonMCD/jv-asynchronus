@@ -53,7 +53,7 @@ public class TaskFive {
     private static BigInteger calculateFactorial(BigInteger num) {
         BigInteger result = BigInteger.ONE;
         for (BigInteger i = BigInteger.ONE; i.compareTo(num) <= 0; i = i.add(BigInteger.ONE)) {
-            result = result.multiply(i);
+            result = result.add(i);
         }
         return result;
     }
